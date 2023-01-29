@@ -1,0 +1,200 @@
+{% extends template %}
+
+{% block content %}
+<!-- Intro Single-->
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h1 class="title-single">Properties</h1>
+          <span class="color-text-a">Click for more information</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <form method="POST" action="{{ url_for('main.properties') }}" class="filter">
+          {{ form.hidden_tag() }}
+          <table class="table table-borderless" style="background-color: #fbfbfb;">
+            <tbody>
+              <tr>
+                <td>
+                  <h4 style="color: #2eca6a;">Location</h4>
+                </td>
+                <td colspan="3">
+                  {{ form.district(class="form-control") }}
+                </td>
+
+              </tr>
+              <tr class="table">
+                <td>
+                  <h4 style="color: #2eca6a;">Price</h4>
+                </td>
+                {% for price in form.price %}
+
+                {% if price.label.text == 'All' %}
+                <td>
+                  {{ price(checked='checked') }} {{ price.label }}
+                </td>
+                {% else %}
+                <td>
+                  {{ price }} {{ price.label }}
+                </td>
+                {% endif %}
+
+                {% endfor %}
+              </tr>
+              <tr class="table">
+                <td>
+                  <h4 style="color: #2eca6a;">Size</h4>
+                </td>
+                {% for size in form.size %}
+                {% if size.label.text == 'All' %}
+                <td>
+                  {{ size(checked='checked') }} {{ size.label }}
+                </td>
+                {% else %}
+                <td>
+                  {{ size }} {{ size.label }}m<sup>2</sup>
+                </td>
+                {% endif %}
+                {% endfor %}
+              </tr>
+              <tr class="table">
+                <td>
+                  <h4 style="color: #2eca6a;">Room</h4>
+                </td>
+                {% for room in form.room %}
+
+                {% if room.label.text == 'All' %}
+                <td>
+                  {{ room(checked='checked') }} {{ room.label }}
+                </td>
+                {% else %}
+                <td>
+                  {{ room }} {{ room.label }}
+                </td>
+                {% endif %}
+
+                {% endfor %}
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+</section>
+<!-- End Intro Single-->
+
+<!--Property Grid-->
+<section class="property-grid grid">
+  <div class="container">
+    <div class="row">
+      {% for property in house_paginate.items %}
+      <div class="col-md-4">
+        <div class="card-box-a card-shadow">
+          <div class="img-box-a">
+            <img
+              src="../../static/images/district/{{ property.district }}/{{ property.buildingType }}/{{ property.buildingType }}.jpg"
+              alt="" class="img-a img-fluid" style="height:360px">
+          </div>
+          <div class="card-overlay">
+            <div class="card-overlay-a-content">
+              <div class="card-header-a">
+                <h2 class="card-title-a">
+                  <a href="{{ url_for('main.house',id = property.id) }}">{{ property.town }}
+                    <br /> {{ property.district }}</a>
+                </h2>
+              </div>
+              <div class="card-body-a">
+                <div class="price-box d-flex">
+                  <span class="price-a">¥ {{ property.price }}/m<sup>2</sup></span>
+                </div>
+                <a href="{{ url_for('main.house',id = property.id) }}" class="link-a">Click here to view
+                  <span class="ion-ios-arrow-forward"></span>
+                </a>
+              </div>
+              <div class="card-footer-a">
+                <ul class="card-info d-flex justify-content-around">
+                  <li>
+                    <h4 class="card-info-title">Area</h4>
+                    <span>{{ property.square }}
+                      m<sup>2</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <h4 class="card-info-title">Bedroom</h4>
+                    <span>{{ property.bedroom }}</span>
+                  </li>
+                  <li>
+                    <h4 class="card-info-title">Bathroom</h4>
+                    <span> {{ property.bathroom }}</span>
+                  </li>
+                  <li>
+                    <h4 class="card-info-title">Kitchen</h4>
+                    <span>{{ property.kitchen }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <nav class="pagination-a">
+          <ul class="pagination justify-content-end">
+            {% if house_paginate.has_prev %}
+            <li class="page-item">
+              <a class="page-link" href="/properties?page={{ house_paginate.prev_num }}" tabindex="-1">
+                <span class="ion-ios-arrow-back"></span>
+              </a>
+            </li>
+            {% endif %}
+
+            {% for page in house_paginate.iter_pages(1,1,3,2) %}
+            {% if page %}
+            <li class="page-item {%if page==house_paginate.page%}active{%endif%}">
+              <a class="page-link" href="/properties?page={{ page }}">{{ page }}</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#">&hellip;</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if house_paginate.has_next %}
+            <li class="page-item next">
+              <a class="page-link" href="/properties?page={{ house_paginate.next_num }}">
+                    <span class=" ion-ios-arrow-forward"></span>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section><!-- End Property Grid Single-->
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+
+  $(document).ready(function () {
+    $('form.filter').change(function (e) {
+      $('form.filter').submit()
+      $('input[type=radio]').attr('disabled','true')
+    });
+
+
+  });
+
+</script>
+
+{% endblock %}

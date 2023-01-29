@@ -1,0 +1,69 @@
+<div class="tab-pane show">
+
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Property ID</th>
+                <th>Owner</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for property in on_sale.items %}
+            <tr>
+                <td>{{ property.id }}</td>
+                <td>{{ property.owner_id }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-b-n dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown">Operation</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item"
+                                href="{{ url_for('main.house',id=property.id) }}">View</a>
+                            <a class="dropdown-item"
+                                href="{{ url_for('main.agent_sold',id=property.id) }}">Sold</a>
+                            <a class="dropdown-item"
+                                href="{{ url_for('main.agent_delete_property',id=property.id) }}">Delete</a>
+                        </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="pagination-a">
+                <ul class="pagination justify-content-end">
+                    {% if on_sale.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="/agent_main/on_sale?page={{ on_sale.prev_num }}" tabindex="-1">
+                            <span class="ion-ios-arrow-back"></span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for page in on_sale.iter_pages(1,1,3,2) %}
+                    {% if page %}
+                    <li class="page-item {%if page==on_sale.page%}active{%endif%}">
+                        <a class="page-link" href="/agent_main/on_sale?page={{ page }}">{{ page }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if on_sale.has_next %}
+                    <li class="page-item next">
+                        <a class="page-link" href="/agent_main/on_sale?page={{ on_sale.next_num }}">
+                      <span class=" ion-ios-arrow-forward"></span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

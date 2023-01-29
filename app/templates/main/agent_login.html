@@ -1,0 +1,53 @@
+{% extends 'main/agent_template.html' %}
+{% block content %}
+<!-- ======= Intro Single ======= -->
+<section class="intro-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                    <h1 class="title-single">Agent Login</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+
+        <form action="{{ url_for('main.handle_agent_login') }}" method="post" role="form" novalidate>
+            {{ login_form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"  style="background-color: #fbfbfb;">
+
+                        <div class="row">
+                            <div class="form-group">
+                                {{ login_form.username.label }}
+                                {{ login_form.username(size=32,class='form-control', placeholder='Enter your username') }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                {{ login_form.password.label }}
+                                {{ login_form.password(size=32,class='form-control', placeholder='Enter your password') }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            {{ login_form.submit(class='btn btn-b-n') }}
+                        </div>
+                        <!-- <p id="login_error"><span style="color: red;"></span></p> -->
+                    </div>
+                    
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+</section>
+
+{% endblock %}

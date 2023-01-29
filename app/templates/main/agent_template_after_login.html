@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Live U Like</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+
+  <link href="../../static/everglow_favicon_on.ico" rel="icon">
+  <link href="../../static/everglow_favicon_on.ico" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../static/assets/vendor/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="../../static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../../static/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../static/assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../../static/assets/css/style.css" rel="stylesheet">
+
+
+
+  <!-- =======================================================
+  * Template Name: EstateAgency - v2.2.1
+  * Template URL: https://bootstrapmade.com/real-estate-agency-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  <!-- ======= Header/Navbar ======= -->
+  <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+    <div class="container">
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
+        aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a class="navbar-brand text-brand" href="{{ url_for('main.index') }}">Live<span class="color-b"> U Like</span></a>
+      <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
+        <ul class="navbar-nav">
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.properties')}}">Buy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.sell')}}">Sell</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.price_calculator') }}">Calculator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li> -->
+        </ul>
+      </div>
+
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ agent.name }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <!-- <a href="{{ url_for('main.my_properties') }}" class="dropdown-item">My Properties</a>
+            <a href="{{ url_for('main.my_favorites') }}" class="dropdown-item">My Favorites</a> -->
+            <a href="{{ url_for('main.agent_logout') }}" class="dropdown-item">Logout</a>
+          </div>
+        </li>
+        </ul>
+
+    </div>
+  </nav>
+  <!-- End Header/Navbar -->
+
+  {% block content %}
+ 
+
+
+  {% endblock %}
+
+
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  <div id="preloader"></div>
+  {% block scripts %}
+  <!-- Vendor JS Files -->
+  <script src="../../static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../../static/assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../../static/assets/vendor/scrollreveal/scrollreveal.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../../static/assets/js/main.js"></script>
+  {% endblock %}
+
+</body>
+
+</html>

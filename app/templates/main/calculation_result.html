@@ -1,0 +1,206 @@
+{% extends template %}
+{% block content %}
+<!-- ======= Intro Single ======= -->
+<section class="intro-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-lg-8">
+				<div class="title-single-box">
+					<h1 class="title-single">Calculation Result</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Intro Single-->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+
+		</div>
+		<div class="col-md-8">
+			<div class="row">
+				<div class="col-md-6">
+					<div style="width: 100%; height: 100%; background-color: #2eca6a;;">
+						<div class="text-center">
+							<h4 style="text-align: left;">Total</h4>
+							<h1 class="sinse-title">
+								¥{{ total }}
+							</h1>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div style="width: 100%; height: 100%; background-color: black;">
+						<div class="text-center">
+							<h4 style="text-align: left;color: #2eca6a;">Per</h4>
+							<h1 class="sinse-title" style="color: #2eca6a;">
+								¥{{ per }}/m<sup>2</sup>
+							</h1>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="width: 100%; height: 100%; background-color: gray;">
+                        <div class="text-center">
+                            <h4 style="text-align: left;color: black;">Deviation</h4>
+                            <h1 class="sinse-title">
+                            -10% ~ 10%
+                            </h1>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+			<div class="col-md-2">
+
+			</div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-8" id="bar_chart" style="height: 660px;">
+                </div>
+                <div class="col-md-4" id="pie_chart" style="height: 660px;">
+                </div>
+            </div>
+            
+        </div>
+       
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type = "text/javascript">
+
+    console.log("...")
+    var chartDom = document.getElementById('bar_chart');
+    console.log(chartDom)
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    var district_average={{ district_average|safe }}
+    var key_list=["ChaoYang","ChangPing","HaiDian","XiCheng","FengTai","TongZhou","DaXing","DongCheng","ShiJingShan","ShunYi"];
+    var value_list=[97203,50717,70060,135500,78830,47198,54880,110387,64340,44304];
+    console.log("...")
+
+    {#for ([key,value] of Object.entries(district_average)){#}
+    {#    key_list.push(key)#}
+    {#    value_list.push(value)#}
+    {#}#}
+    {##}
+    {#console.log("...")#}
+
+    key_list.push("Yours")
+    value_list.push({"value": {{ price }},"itemStyle": {
+                color: '#a90000'
+            } })
+
+    option = {
+        title: {
+            text: 'Average price',
+            left: 'center'
+        },
+        xAxis: {
+            type: 'category',
+            data: key_list
+        },
+        yAxis: {
+            type: 'value',
+            name: 'Price ￥/m^2'
+        },
+        series: [{
+            data: value_list,
+            type: 'bar'
+        }]
+    };
+    option && myChart.setOption(option);
+
+
+
+    var chartDom = document.getElementById('pie_chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    {#var key_list=[];#}
+    {#var dict_list=[];#}
+    {#console.log({{ ml_feature_importance|safe }})#}
+{#    {% for key,value in ml_feature_importance.items() %}#}
+    {#key_list.push({{ key }})#}
+    {#key_list.push({{ key }})#}
+    {#dict_list.push({value:{{ value }},name:{{ key }}})#}
+{#    {% endfor %}#}
+    var ml_feature_importance={{ ml_feature_importance|safe }}
+    var key_list=[]
+    var dict_list=[]
+    var dict={"geographic position":0,"house condition":0,"community condition":0}
+    for ([key,value] of Object.entries(ml_feature_importance)){
+        if (["Lat","Lng","district","town","name0","name1","name2"].includes(key)){
+            dict["geographic position"]+=ml_feature_importance[key]
+        }else if(["floorHeight","square","kitchen","bathRoom","livingRoom","drawingRoom","fiveYearsProperty","renovationCondition"].includes(key)){
+            dict["house condition"]+=ml_feature_importance[key]
+        }else if(["buildingType","constructionTime","floorType","elevator","buildingStructure","subway"].includes(key)){
+            dict["community condition"]+=ml_feature_importance[key]
+        }else{
+            dict[key]=ml_feature_importance[key]
+        }
+    }
+    delete dict["tradeTime"]
+    for ([key,value] of Object.entries(dict)){
+        key_list.push(key)
+        dict_list.push({"value":value,"name":key})
+    }
+
+    {#console.log(dict_list)#}
+    option = {
+        bottom:50,
+        title: {
+            text: 'Price factors',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {d}%'
+        },
+        legend: {
+            bottom: 0,
+            left: 'center',
+            data: key_list,
+            height:100
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '65%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: dict_list,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    option && myChart.setOption(option);
+
+
+
+</script>
+{% endblock %}

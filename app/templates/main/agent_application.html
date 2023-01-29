@@ -1,0 +1,34 @@
+<div class="tab-pane show">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Property ID</th>
+                <th>Owner</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for property in applications.items %}
+            <tr>
+                <td>{{ property.id }}</td>
+                <td>{{ property.owner_id }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-b-n dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown">Operation</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item"
+                                href="{{ url_for('main.house',id=property.id) }}">View</a>
+                            <a class="dropdown-item"
+                                href="{{ url_for('main.agent_approve_application',id=property.id) }}">Approve</a>
+                            <a class="dropdown-item"
+                                href="{{ url_for('main.agent_delete_property',id=property.id) }}">Disapprove</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,63 @@
+{% extends template %}
+
+{% block content %}
+<!-- ======= Intro Single ======= -->
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h1 class="title-single">Sell Property</h1>
+          <span class="color-text-a">Post the information of the property you wanna sell</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Intro Single-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+      <h3>Dear User, please <a href="#modal-container-492324" data-toggle="modal"><span style="color: #2eca6a;">login</span></a> before releasing your property!</h3>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+
+  $(document).ready(function () {
+    $('#district').change(function (e) {
+      event.preventDefault();
+      console.log($('#town').val())
+      $.ajax({
+        url: '{{ url_for("main.price_calculator") }}',
+        method: 'POST',
+        dataType: 'json',//后台返回json格式的返回值
+        data: $('form').serialize(),
+        success: function (response) {
+          var newOptions = response['choices'];
+          $('#town').empty();
+          $.each(newOptions, function (key, value) {
+            $('#town').append($("<option></option>")
+              .attr("value", key).text(value));
+          });
+        }
+      });
+
+    });
+  });
+
+</script>
+{% endblock %}

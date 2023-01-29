@@ -1,0 +1,37 @@
+{% extends 'main/agent_template_after_login.html' %}
+{% block content %}
+<!-- ======= Intro Single ======= -->
+<section class="intro-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                    <h1 class="title-single">Manage Properties</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link {%if service=='application'%}active{%endif%}"
+                            href="{{ url_for('main.agent_main',service='application') }}">Applications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {%if service=='on_sale'%}active{%endif%}" href="{{ url_for('main.agent_main',service='on_sale') }}">On Sale</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {%if service=='sold'%}active{%endif%}" href="{{ url_for('main.agent_main',service='sold') }}">Sold</a>
+                    </li>
+                </ul>
+                {% include web %}
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,264 @@
+{% extends template %}
+
+{% block content %}
+<!-- ======= Intro Single ======= -->
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h1 class="title-single">Price Calculator</h1>
+          <span class="color-text-a">Estimate the value of your property</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Intro Single-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-8" style="background-color: #fbfbfb;">
+      <form method="POST" action="{{ url_for('main.calculation') }}" target="_blank">
+        {{ form.hidden_tag() }}
+        <!-- Location -->
+        <div class="row">
+          <h4 class="title-single">Location</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>
+                District
+              </label>
+              {{ form.district(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" id="div_town">
+              <label>
+                Town
+              </label>
+              {{ form.town(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>
+                    Business
+                    </label>
+                    {{ form.business(class="form-control") }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Building -->
+        <div class="row">
+          <h4 class="title-single">Building</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Type
+              </label>
+              {{ form.buildingType(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Structure
+              </label>
+              {{ form.buildingStructure(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Construction Time
+              </label>
+              {{ form.constructionTime(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Elevator
+              </label>
+              {{ form.elevator(class="form-control") }}
+            </div>
+          </div>
+        </div>
+
+        <!-- House -->
+        <div class="row">
+          <h4 class="title-single">House</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Size
+              </label>
+              {{ form.square(class="form-control",type='number',oninvalid="setCustomValidity('Please enter the size of the property!')", oninput="this.setCustomValidity('')" ,min="1") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Renovation
+              </label>
+              {{ form.renovationCondition(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Floor Type
+              </label>
+              {{ form.floorType(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Floor Height
+              </label>
+              {{ form.floorHeight(class="form-control") }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Room -->
+        <div class="row">
+          <h4 class="title-single">Room</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Bedroom
+              </label>
+              {{ form.livingRoom(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Living Room
+              </label>
+              {{ form.drawingRoom(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Bathroom
+              </label>
+              {{ form.bathRoom(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                Kitchen
+              </label>
+              {{ form.kitchen(class="form-control") }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Other -->
+        <div class="row">
+          <h4 class="title-single">Other</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-group">
+                <label>
+                  Subway
+                </label>
+                {{ form.subway(class="form-control") }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>
+                Five-Year-Property
+              </label>
+              {{ form.fiveYearsProperty(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <a href="#" target="_blank">
+            {{ form.submit(class="btn btn-b",value='Calculate') }}
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-2">
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+
+    $(document).ready(function(){
+      $('#district').change(function(e){
+        event.preventDefault();
+        console.log($('#town').val())
+        $.ajax({
+          url:'{{ url_for("main.price_calculator") }}',
+          method:'POST',
+          dataType:'json',//后台返回json格式的返回值
+          data: $('form').serialize(),
+          success:function(response){
+            var newOptions = response['choices'];
+            $('#town').empty();
+            $.each(newOptions, function(key,value) {
+              $('#town').append($("<option></option>")
+                .attr("value", key).text(value));
+            });
+          }
+        });
+      });
+      $("#town").change(function (e) {
+        $.ajax({
+          url:'{{ url_for("main.change_town") }}',
+          method:'POST',
+          dataType:'json',//后台返回json格式的返回值
+          data: $('form').serialize(),
+          success:function(response){
+            var newOptions = response['choices'];
+            {#console.log(newOptions)#}
+            $('#business').empty();
+            for(i in newOptions){
+                $('#business').append($("<option></option>").text(newOptions[i]));
+            }
+            {#$.each(newOptions, function(value) {#}
+            {#  #}
+            {#});#}
+          }
+        });
+      });
+    });
+
+</script>
+{% endblock %}

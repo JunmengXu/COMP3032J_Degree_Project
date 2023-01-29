@@ -1,0 +1,2 @@
+FLASK_APP=CapstoneProject.py
+FLASK_ENV=development

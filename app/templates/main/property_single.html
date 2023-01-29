@@ -1,0 +1,823 @@
+{% extends template %}
+
+{% block metas %}
+<meta id="house_meta" house_id="{{ house.id }}">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .course {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        .course h6 {
+            opacity: 0.6;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .course h2 {
+            letter-spacing: 1px;
+            margin: 10px 0;
+            max-width: 100%;
+        }
+
+        .course-preview {
+            color: #fff;
+            padding: 30px;
+            max-width: 38%;
+        }
+
+        .course-info {
+            margin-top: 10px;
+            padding: 30px;
+            position: relative;
+            width: 100%;
+        }
+     
+        
+    </style>
+</head>
+
+<body>
+    <main id="main">
+
+        <!-- ======= Intro Single ======= -->
+        <section class="intro-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="title-single-box">
+                            <h1 class="title-single">{{ house.town }}</h1>
+                            <span class="color-text-a">{{ house.district }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4">
+                        <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ url_for('main.index') }}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ url_for('main.properties') }}">Properties</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ house.town }}
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Intro Single-->
+
+        <!-- ======= Property Single ======= -->
+        <section class="property-single nav-arrow-b">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="property-single-carousel" class="owl-carousel owl-arrow gallery-property">
+                            <!-- <div class="carousel-item-b">
+                                <img width="500px" height="600px"
+                                    src="../../static/images/district/{{ house.district }}/{{ house.buildingType }}/{{ house.buildingType }}.jpg"
+                                    loading="lazy" alt="">
+                            </div> -->
+                            <div class="carousel-item-b">
+                                {% if house.renovationCondition >= 3 %}
+                                <img class="room1g" width="500px" height="600px"
+                                loading="lazy" src="../../static/images/renovationCondition/good/room1/1.jpg" alt="">
+                                {% else %}
+                                <img class="room1r" width="500px" height="600px"
+                                loading="lazy" src="../../static/images/renovationCondition/rough/room1/1.jpg" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="carousel-item-b">
+                                {% if house.renovationCondition >= 3 %}
+                                <img class="room2g" width="500px" height="600px"
+                                loading="lazy" src="../../static/images/renovationCondition/good/room2/1.jpg" alt="">
+                                {% else %}
+                                <img class="room2r" width="500px" height="600px"
+                                loading="lazy" src="../../static/images/renovationCondition/rough/room2/1.jpg" alt="">
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-between">
+                            <div class="col-md-5 col-lg-4">
+                                <div class="row">
+
+                                    <div class="courses-container" style="width: 100%;">
+                                        <div class="course">
+                                            <div class="course-preview text-center" style="background-color: #E6D4DA;">
+                                                {% if user %}
+                                                <a href="#" id="favorite">
+                                                    {% if favorite_status %}
+                                                    <img src="../../static/heart_black.png">
+                                                    {% else %}
+                                                    <img src="../../static/heart_white.png">
+                                                    {% endif %}
+                                                </a>
+                                                {% else %}
+                                                <img src="../../static/heart_white.png">
+                                                {% endif %}
+                                            </div>
+                                            <div class="course-info text-center">
+                                                <div class="row" style="margin-top: -30px;">
+                                                    <span>Followers</span>
+                                                </div>
+                                                <div class="row" style="margin-top: 10%;">
+                                                    <h3 id="follower" style="margin-left: 25%;">{{ house.followers }}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="courses-container" style="width: 100%;">
+                                        <div class="course">
+                                            <div class="course-preview text-center" style="background-color: #2eca6a;">
+                                                <img src="../../static/dollar_per.png">
+                                            </div>
+                                            <div class="course-info">
+                                                <div class="row" style="margin-top: -30px;">
+                                                    <span>Price/m<sup>2</sup>(¥)</span>
+                                                </div>
+                                                <div class="row" style="margin-top: 10%;">
+                                                    <h3 style="margin-left: 25%;">{{ house.price }}/m<sup>2</sup></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="courses-container" style="width: 100%;">
+                                        <div class="course">
+                                            <div class="course-preview text-center" style="background-color: #DCE3DA;">
+                                                <img src="../../static/house-design.png">
+                                            </div>
+                                            <div class="course-info text-center">
+                                                <div class="row" style="margin-top: -30px;">
+                                                    <span>Area</span>
+                                                </div>
+                                                <div class="row" style="margin-top: 10%;">
+                                                    <h3 style="margin-left: 25%;">{{ house.square }}m<sup>2</sup></h3>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="courses-container" style="width: 100%;">
+                                        <div class="course">
+                                            <div class="course-preview text-center" style="background-color: #084F6B;">
+                                                <img src="../../static/dollar.png">
+                                            </div>
+                                            <div class="course-info text-center">
+                                                <div class="row" style="margin-top: -30px;">
+                                                    <span>Total(¥)</span>
+                                                </div>
+                                                <div class="row" style="margin-top: 10%;">
+                                                    <h3 style="margin-left: 25%;">{{ total}}K</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7 col-lg-7 section-md-t3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="title-box-d">
+                                            <!-- <h3 class="title-d">Information</h3> -->
+                                            <ul class="nav nav-tabs">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active show" href="#tab1" data-toggle="tab">
+                                                        <h4 class="title-single">Property Details</h4>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#tab3" data-toggle="tab">
+                                                        <h4 class="title-single">Visualization</h4>
+                                                    </a>
+                                                </li>
+                                                {% if agent %}
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#tab2" data-toggle="tab">
+                                                        <h4 class="title-single">Contact</h4>
+                                                    </a>
+                                                </li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-content">
+                                    <div class="property-summary tab-pane active" id="tab1">
+                                        <div class="summary-list">
+                                            <ul class="list">
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Location:</strong>
+                                                    <span>{{ house.town + ", " + house.district }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Community:</strong>
+                                                    <span>{{ house.community }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Building Type:</strong>
+                                                    {% if house.buildingType == 1 %}
+                                                    <span>Tower</span>
+                                                    {% elif house.buildingType == 2 %}
+                                                    <span>Bungalow</span>
+                                                    {% elif house.buildingType == 3 %}
+                                                    <span>Plate and Tower</span>
+                                                    {% else %}
+                                                    <span>Plate</span>
+                                                    {% endif %}
+                                                </li>
+
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Bedroom:</strong>
+                                                    <span>{{ house.bedroom }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Bathroom:</strong>
+                                                    <span>{{ house.bathroom }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Kitchen:</strong>
+                                                    <span>{{ house.kitchen }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Living Room:</strong>
+                                                    <span>{{ house.livingroom }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Floor:</strong>
+                                                    <span>{{ house.floorHeight }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Has Elevator</strong>
+                                                    {% if house.elevator == 1 %}
+                                                    <span>Yes</span>
+                                                    {% else %}
+                                                    <span>No</span>
+                                                    {% endif %}
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Nearby Has Subway</strong>
+                                                    {% if house.subway == 1 %}
+                                                    <span>Yes</span>
+                                                    {% else %}
+                                                    <span>No</span>
+                                                    {% endif %}
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Construction Time:</strong>
+                                                    <span>{{ house.constructionTime }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Renovation</strong>
+                                                    {% if house.renovationCondition == 1 %}
+                                                    <span>Other</span>
+                                                    {% elif house.renovationCondition == 2 %}
+                                                    <span>Rough</span>
+                                                    {% elif house.renovationCondition == 3 %}
+                                                    <span>Simplicity</span>
+                                                    {% else %}
+                                                    <span>Hardcover</span>
+                                                    {% endif %}
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Building Structure</strong>
+                                                    {% if house.buildingStructure == 1 %}
+                                                    <span>Unknow</span>
+                                                    {% elif house.buildingStructure == 2 %}
+                                                    <span>Mixed</span>
+                                                    {% elif house.buildingStructure == 3 %}
+                                                    <span>Brick and Wood</span>
+                                                    {% elif house.buildingStructure == 4 %}
+                                                    <span>Brick and Concrete</span>
+                                                    {% elif house.buildingStructure == 5 %}
+                                                    <span>Steel</span>
+                                                    {% else %}
+                                                    <span>Steel-concrete Composite</span>
+                                                    {% endif %}
+                                                </li>
+                                                <!-- <li class="d-flex justify-content-between">
+                                                    <strong>Ladder Ratio</strong>
+                                                    <span>{{ house.ladderRatio }}</span>
+                                                </li> -->
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Community Average</strong>
+                                                    <span>¥ {{ house.communityAverage }}/m<sup>2</sup></span>
+                                                </li>
+                                                <!-- <li class="d-flex justify-content-between">
+                                                    <strong>Business Circle</strong>
+                                                    <span>{{ house.business }}</span>
+                                                </li> -->
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Has Five-Years-Property</strong>
+                                                    {% if house.fiveYearsProperty == 1 %}
+                                                    <span>Yes</span>
+                                                    {% else %}
+                                                    <span>No</span>
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    {% if agent %}
+                                    <div class="tab-pane" id="tab2">
+                                        <div class="row" style="background-color: #fbfbfb;">
+                                            <div class="col-md-4">
+                                                <div class="row">
+                                                    <img src="../../static/images/agent/{{ agent.avatar }}.png" loading="lazy" alt=""
+                                                        class="img-d img-fluid" width="80%">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <h1 class="title-single" style="color: #2eca6a;">
+                                                        <strong>Agent</strong>
+                                                    </h1>
+                                                </div>
+
+                                                <div class="summary-list">
+
+                                                    <ul class="list">
+                                                        <li class="d-flex justify-content-between">
+                                                            <strong>Name</strong>
+                                                            <span>{{ agent.name }}</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <strong>Phone Number</strong>
+                                                            <span>{{ agent.phone_number }}</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <strong>Email</strong>
+                                                            <span>{{ agent.email }}</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <strong>Wechat</strong>
+                                                            <img src="../../static/images/agent/wechat/wechat_17205941.png"
+                                                            loading="lazy" class="img-d img-fluid" width="50%" height="50%">
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="tab-pane" id="tab3">
+                                        <div class="row" style="background-color: #fbfbfb;">
+                                            <div id="chart" style="width: 650px;height: 500px;">
+                                            </div>
+                                            <p></p>
+                                            <div><p>The current property's price is marked green.</p></div>
+                                            <div><p>Drag the mouse and rotate the pulley to rotate, zoom in and out of the chart.</p></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span id="house-lng" style="color: #ffffff">{{ house.lng }}</span>
+                <span id="house-lat" style="color: #ffffff">{{ house.lat }}</span>
+                {# <div class="col-md-10 offset-md-1">#}
+                    <div class="col-md-12">
+                        <ul class="nav nav-pills-a nav-pills mb-3 section-t3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-map-tab" data-toggle="pill" href="#pills-map" role="tab"
+                                    aria-controls="pills-map" aria-selected="false">
+                                    <h2>Map</h2>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="container">
+                                {# <div class="row">#}
+                                    {# <div class="col-md-2">#}
+                                        {# <button class="form-control btn-primary" id="cinema">Cinema</button>#}
+                                        {# </div>#}
+                                    {# <div class="col-md-2">#}
+                                        {# <button class="form-control btn-primary" id="catering">Catering</button>#}
+                                        {# </div>#}
+                                    {# <div class="col-md-2">#}
+                                        {# <button class="form-control btn-primary" id="hospital">Hospital</button>#}
+                                        {# </div>#}
+                                    {# <div class="col-md-2">#}
+                                        {# <button class="form-control btn-primary" id="hotel">Hotel</button>#}
+                                        {# </div>#}
+                                    {# <div class="col-md-2">#}
+                                        {# <button class="form-control btn-primary" id="shopping">Shopping</button>#}
+                                        {# </div>#}
+                                    {# <div class="col-md-2">#}
+                                        {# <button class="form-control btn-primary" id="business">Business</button>#}
+                                        {# </div>#}
+                                    {# </div>#}
+                                {# <div class="row">
+                                    <p></p>
+                                </div>#}
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button class="form-control btn" id="back-house-btn"
+                                            style="color: #ffffff; background-color: #2eca6a">Return to property
+                                            location</button>
+                                    </div>
+
+                                    {# 搜索框#}
+                                    <div class="col-md-4">
+                                        <input class="form-control" type="text" id="map_search" name="map_search"
+                                            value="Please enter keywords" onfocus='this.value=""' />
+                                    </div>
+
+                                    <div class="col-md-4 offset-md-1">
+                                        <div class="btn-group">
+                                            <button class="btn"
+                                                style="color: #ffffff; background-color: #2eca6a">Surrounding
+                                                Facilities (1km)</button>
+                                            <button class="btn dropdown-toggle" data-toggle="dropdown"
+                                                style="color: #ffffff; background-color: #2eca6a; margin-left: 2px">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><button class="form-control btn-link" id="cinema">Cinema</button>
+                                                </li>
+                                                <li><button class="form-control btn-link"
+                                                        id="catering">Catering</button></li>
+                                                <li><button class="form-control btn-link"
+                                                        id="hospital">Hospital</button></li>
+                                                <li><button class="form-control btn-link" id="hotel">Hotel</button></li>
+                                                <li><button class="form-control btn-link"
+                                                        id="shopping">Shopping</button></li>
+                                                <li><button class="form-control btn-link"
+                                                        id="business">Business</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <p></p>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show active" id="pills-video" role="tabpanel"
+                                aria-labelledby="pills-video-tab">
+                                <!-- <iframe src="https://player.vimeo.com/video/73221098" width="100%" height="460" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+                            </div>
+                            <div class="tab-pane fade" id="pills-plans" role="tabpanel"
+                                aria-labelledby="pills-plans-tab">
+                                <!-- <img src="assets/img/plan2.jpg" alt="" class="img-fluid"> -->
+                            </div>
+
+
+                            <div class="tab-pane fade show active" id="pills-map" role="tabpanel"
+                                aria-labelledby="pills-map-tab">
+                                <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes+Square!5e0!3m2!1ses-419!2sve!4v1510329142834" width="100%" height="460" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+                                <div id="map" class="embed-responsive embed-responsive-16by9">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="map-container">
+
+
+                            <!-- <script type="text/javascript"
+                                    src="https://webapi.amap.com/maps?v=1.4.15&key=d69b952ebb1b2dd61d42619428f5063e"></script> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section><!-- End Property Single-->
+
+        <!--Property Grid-->
+        <section class="property-grid grid">
+            <div class="container">
+                <hr>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2>Maybe you like</h2>
+                        </div>
+                        <div class="col-md-1">
+                            <h5 class="color-b">Options</h5>
+                        </div>
+                        <div class="col-md-3">
+                            
+                            <form method="POST" id="recommendation_form"
+                                action="{{ url_for('main.handle_recommendation', id=house.id) }}">
+                                {{ form.hidden_tag() }}
+                                {{ form.options() }}
+                            </form>
+                           
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <p></p>
+                </div>
+
+                <div id="recommendation_section">
+                    <div class="row">
+                        {% for property in house_paginate.items %}
+                        <div class="col-md-4">
+                            <div class="card-box-a card-shadow">
+                                <div class="img-box-a">
+                                    <img src="../../static/images/district/{{ property.district }}/{{ property.buildingType }}/{{ property.buildingType }}.jpg"
+                                        alt="" loading="lazy" class="img-a img-fluid" style="height:360px">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-overlay-a-content">
+                                        <div class="card-header-a">
+                                            <h2 class="card-title-a">
+                                                <a href="{{ url_for('main.house',id = property.id) }}">{{ property.town
+                                                    }}
+                                                    <br /> {{ property.district }}</a>
+                                            </h2>
+                                        </div>
+                                        <div class="card-body-a">
+                                            <div class="price-box d-flex">
+                                                <span class="price-a">¥ {{ property.price }}/m<sup>2</sup></span>
+                                            </div>
+                                            <a href="{{ url_for('main.house',id = property.id) }}" class="link-a">Click
+                                                here
+                                                to view
+                                                <span class="ion-ios-arrow-forward"></span>
+                                            </a>
+                                        </div>
+                                        <div class="card-footer-a">
+                                            <ul class="card-info d-flex justify-content-around">
+                                                <li>
+                                                    <h4 class="card-info-title">Area</h4>
+                                                    <span>{{ property.square }}
+                                                        m<sup>2</sup>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Bedroom</h4>
+                                                    <span>{{ property.bedroom }}</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Bathroom</h4>
+                                                    <span> {{ property.bathroom }}</span>
+                                                </li>
+                                                <li>
+                                                    <h4 class="card-info-title">Kitchen</h4>
+                                                    <span>{{ property.kitchen }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <nav class="pagination-a">
+                                <ul class="pagination justify-content-end">
+                                    {% if house_paginate.has_prev %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                            href="/house/{{ house.id }}?page={{ house_paginate.prev_num }}"
+                                            tabindex="-1">
+                                            <span class="ion-ios-arrow-back"></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+
+                                    {% for page in house_paginate.iter_pages(1,1,3,2) %}
+                                    {% if page %}
+                                    <li class="page-item {%if page==house_paginate.page%}active{%endif%}">
+                                        <a class="page-link" href="/house/{{ house.id }}?page={{ page }}">{{ page }}</a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#">&hellip;</a>
+                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    {% if house_paginate.has_next %}
+                                    <li class="page-item next">
+                                        <a class="page-link"
+                                            href="/house/{{ house.id }}?page={{ house_paginate.next_num }}">
+                                            <span class=" ion-ios-arrow-forward"></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Property Grid Single-->
+
+
+    </main><!-- End #main -->
+</body>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+    $(document).ready(function () {
+
+        $('#favorite').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '{{ url_for("main.handle_favorites") }}',
+                method: 'POST',
+                dataType: 'json',//后台返回json格式的返回值
+                data: { 'property_id': '{{ house.id }}' },
+                success: function (response) {
+                    var status = response['status']
+                    var follower = parseInt($('#follower').text())
+                    console.log(follower)
+                    console.log(status)
+                    if (status == 'cancel') {
+                        $('#favorite img').attr('src', '../../static/heart_white.png')
+
+                        $('#follower').text(follower - 1)
+                    } else {
+                        $('#favorite img').attr('src', '../../static/heart_black.png')
+                        $('#follower').text(follower + 1)
+                    }
+                }
+            });
+        });
+
+        $('#recommendation_form').on('change', function () {
+            
+            event.preventDefault();
+            $.ajax({
+                url: "{{ url_for('main.handle_recommendation', id=house.id) }}",
+                method: 'POST',
+                data: $('#recommendation_form').serialize(),
+                success: function (response) {
+                    $('#recommendation_section').html(response)
+
+                }
+            });
+        });
+
+
+
+
+
+
+
+    });
+</script>
+<script type="text/javascript"
+    src="https://webapi.amap.com/maps?v=1.4.15&key=d69b952ebb1b2dd61d42619428f5063e&plugin=AMap.Autocomplete"></script>
+<script type="text/javascript"
+    src="https://webapi.amap.com/maps?v=1.4.15&key=d69b952ebb1b2dd61d42619428f5063e&plugin=AMap.PlaceSearch"></script>
+<script src="{{ url_for('static', filename='js/main/house.js') }}"></script>
+
+<!-- 引入 ECharts 文件 -->
+
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+
+
+<!-- {# 接收route传来的不同区分位点房价数据并绘制在3D的柱状图上   #} -->
+<script>
+    var chartDom = document.getElementById('chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    // {# X轴 #}
+    var quantiles = ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7',
+        '0.8', '0.9', '1.0'];
+    // {# Y轴 #}
+    var districts = ['Changping', 'Chaoyang', 'Daxing', 'Dongcheng', 'Fangshan', 'Fengtai', 'Haidian', 'Mentougou', 'Shijingshan', 'Shunyi',
+        'Tongzhou', 'Xicheng'];
+
+    // {# 3D图的各种配置 #}
+    option = {
+        tooltip: {},
+        visualMap: {
+            max: 80,
+            inRange: {
+                color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+            }
+        },
+        xAxis3D: {
+            type: 'category',
+            data: quantiles,
+            name: 'Quantiles',
+            axisLabel: {
+                interval: 0,//横轴信息全部显示
+            }
+        },
+        yAxis3D: {
+            type: 'category',
+            data: districts,
+            name: 'Districts',
+            axisLabel: {
+                interval: 0,//纵轴信息全部显示
+                rotate: -30,//-30度角倾斜显示
+            },
+        },
+        zAxis3D: {
+            type: 'value',
+            name: 'Price K/m^2',
+        },
+        grid3D: {
+            boxWidth: 150,
+            boxDepth: 110,
+            viewControl: {
+                // {#projection: 'orthographic',#}
+                autoRotate: true, //是否开启自动3d 旋转
+                maxDistance: 400, //最大的值 （默认400）
+                minDistance: 40,//是距离 最小值 （默认40） 与最大值相等时 则不能够放大与缩小
+            },
+            light: {
+                main: {
+                    intensity: 1.2,
+                    shadow: false
+                },
+                ambient: {
+                    intensity: 0.3
+                }
+            }
+        },
+        dataset: {
+            dimensions: [
+                'District',
+                'Quantile',
+                'Price k/m^2',
+            ],
+            source: {{ chart }}
+        },
+    series: [{
+        type: 'bar3D',
+        data: {{ chart }}.map(function (item) {
+            if (item[1] == {{ currentX }}
+        && item[0] == {{ currentY }}){
+        return {
+            value: [item[1], item[0], {{ house.price / 1000 }}],
+        itemStyle: {
+        color: '#00a900'
+    },
+    name: "current property's price is in this position"
+                    }
+                }else {
+        return {
+            value: [item[1], item[0], item[2]],
+            name: 'other property'
+        }
+    }
+            }),
+    shading: 'lambert',
+
+    emphasis: {
+        label: {
+            fontSize: 20,
+                color: '#900'
+        },
+        itemStyle: {
+            color: '#900'
+        }
+    }
+        }]
+    }
+    option && myChart.setOption(option);
+</script>
+
+{% endblock %}

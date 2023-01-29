@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Live U Like</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+  <!-- Favicons -->
+  <link href="{{url_for('static',filename='everglow_favicon_on.ico')}}" rel="icon">
+  <link href="{{url_for('static',filename='everglow_favicon_on.ico')}}" rel="icon">
+  <link href="{{url_for('static',filename='everglow_favicon_on.ico')}}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="../../static/assets/css/font.css"  rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/animate.css/animate.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/owl.carousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+
+  <style>
+       .ion-ios-arrow-forward {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        .ion-ios-arrow-back {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
+  </style>
+
+
+  <!-- =======================================================
+  * Template Name: EstateAgency - v2.2.1
+  * Template URL: https://bootstrapmade.com/real-estate-agency-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  <!-- ======= Header/Navbar ======= -->
+  <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+    <div class="container">
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
+        aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a class="navbar-brand text-brand" href="{{ url_for('main.index') }}">Live<span class="color-b"> U Like</span></a>
+      <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.properties')}}">Buy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.sell')}}">Sell</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.price_calculator') }}">Calculator</a>
+          </li>
+{#          <li class="nav-item">#}
+{#            <a class="nav-link" href="#">About</a>#}
+{#          </li>#}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.help_page') }}">Help</a>
+          </li>
+        </ul>
+      </div>
+
+      <a id="modal-492324" href="#modal-container-492324" role="button" class="btn btn-b-n" data-toggle="modal">
+        <span>Login/Register</span>
+      </a>
+
+    </div>
+  </nav>
+  <!-- End Header/Navbar -->
+
+  {% block content %}
+
+
+  {% endblock %}
+  <!-- Footer -->
+
+  <section class="section-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <div class="widget-a">
+            <div class="w-header-a">
+              <h3 class="w-title-a text-brand">Live<span class="color-b"> U Like</span></h3>
+            </div>
+            <div class="w-body-a">
+              <p class="w-text-a color-text-a">
+                If you have any questions about the website, please use the following information to contact us!
+              </p>
+            </div>
+            <div class="w-footer-a">
+              <ul class="list-unstyled">
+                <li class="color-a">
+                  <span class="color-text-a">Email .</span> rinigong.wu@liveulike.com
+                </li>
+                <li class="color-a">
+                  <span class="color-text-a">Phone .</span> +86 18548148006
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 section-md-t3">
+          <div class="widget-a">
+            <div class="w-header-a">
+              <h3 class="w-title-a text-brand">About <span class="color-b">Us</span> </h3>
+            </div>
+            <div class="w-body-a">
+              <div class="w-body-a">
+                <ul class="list-unstyled">
+                  <li class="item-list-a">
+                    <i class="fa fa-angle-right"></i> <a href="https://github.com/COMP3032J-Group-7-Everglow">Github</a>
+                  </li>
+                  <li class="item-list-a">
+                    <i class="fa fa-angle-right"></i> <a href="https://www.ucd.ie/bdic/">Organization</a>
+                  </li>
+ 
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 section-md-t3">
+          <div class="widget-a">
+            <div class="w-header-a">
+              <h3 class="w-title-a text-brand">Designed <span class="color-b">by</span></h3>
+            </div>
+            <div class="w-body-a">
+              <ul class="list-unstyled">
+                <li class="item-list-a">
+                  <i class="fa fa-angle-right"></i><a href="https://bootstrapmade.com/">BootstrapMade</a>
+                </li>
+               
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal fade" id="modal-container-492324" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom: none;">
+          <h5 class="modal-title" id="myModalLabel">
+            Welcome to <strong>Live <span style="color: #2eca6a;">U Like</span></strong>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="tabbable" id="tabs-427551">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="#login_tab" data-toggle="tab"><span class="color-b">Login</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#register_tab" data-toggle="tab"><span class="color-b">Create an Account</span></a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="login_tab">
+              <form action="{{ url_for('main.login') }}" method="post" role="form" novalidate id="login_form">
+                {{ login_form.hidden_tag() }}
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+
+                      <div class="row">
+                        <div class="form-group">
+                          {{ login_form.login_email.label }}
+                          {{ login_form.login_email(size=32)
+                          }}
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group">
+                          {{ login_form.login_password.label }}
+                          {{ login_form.login_password(size=32)
+                          }}
+                        </div>
+                      </div>
+                      <p id="login_error" hidden><span style="color: red;"></span></p>
+                    </div>
+                    <div class="col-md-3"></div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-b-n" id="sign_in">Sign In</button>
+                  <button type="button" class="btn btn-b-d" data-dismiss="modal">
+                    Close
+                  </button>
+                </div>
+              </form>
+
+            </div>
+            <div class="tab-pane" id="register_tab">
+              <form id="register_form" action="{{ url_for('main.register') }}" method="post" role="form" novalidate>
+                {{ register_form.hidden_tag() }}
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+
+                      <div class="row">
+                        <div class="form-group">
+                          {{ register_form.register_username.label }}
+                          {{ register_form.register_username(size=32) }}
+                        </div>
+                        <p id="username_error" hidden><span style="color: red;"></span>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group">
+                          {{ register_form.email.label }}
+                          {{ register_form.email(size=32) }}
+                        </div>
+                        <p id="email_error" hidden><span style="color: red;"></span>
+                        </p>
+                      </div>
+                      <div class="row">
+                        <div class="form-group">
+                          {{ register_form.register_password.label }}
+                          {{ register_form.register_password(size=32) }}
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group">
+                          {{ register_form.password2.label }}
+                          {{ register_form.password2(size=32)}}
+                        </div>
+                      </div>
+                      <p id="pwd_error" hidden><span style="color: red;"></span>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-b-n" id="register">Register</button>
+                  <button type="button" class="btn btn-b-d" data-dismiss="modal">
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  </main>
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  <div id="preloader"></div>
+  {% block scripts %}
+  <!-- Vendor JS Files -->
+  <script src="{{url_for('static',filename='assets/vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/jquery.easing/jquery.easing.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/owl.carousel/owl.carousel.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/scrollreveal/scrollreveal.min.js')}}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+  <script>
+
+    // function
+
+
+    $(document).ready(function () {
+      $('#sign_in').click(function () {
+        event.preventDefault();
+        console.log('Sign In')
+        var username = $('#login_email').val();
+        var pwd = $('#login_password').val();
+        if (username == '') {
+          $('#login_email').css('border-color','red');
+          $('#login_error').removeAttr('hidden');
+          $('#login_error span').text('Do not leave fields empty!');
+
+        } else if (pwd == '') {
+          $('#login_password').css('border-color','red');
+          $('#login_error').removeAttr('hidden');
+          $('#login_error span').text('Do not leave fields empty!');
+
+        } else {
+          $.ajax({
+            url: '{{ url_for("main.login") }}',
+            method: 'POST',
+            dataType: 'json',//后台返回json格式的返回值
+            data: $('#login_form').serialize(),
+            success: function (response) {
+              var error = response['error']
+              if (error == 'none') {
+                var user = response['user']
+                if (user == 'agent'){
+                  window.location.href="{{ url_for('main.agent_main',service='applications') }}";
+                }else{
+                  window.location.reload();
+                }
+                
+              } else {
+                $('#login_error').removeAttr('hidden');
+                $('#login_error span').text(response['error']);
+              }
+
+            }
+          });
+        }
+      });
+      var regEmail = /^[a-zA-Z0-9._%+-]+@(?!.*\.\..*)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      function checkRegistrationEmail() {
+        var input = $('#email').val();
+        var validation = false;
+        if (!regEmail.test(input) || input == '') {
+          $('#email_error span').text('Please enter valid email address.');
+          $('#email_error').removeAttr('hidden');
+          $('#email').css('border-color', 'red');
+          validation = false;
+
+        } else {
+          $.ajax({
+            url: '{{ url_for("main.check_email") }}',
+            method: 'POST',
+            dataType: 'json',//后台返回json格式的返回值
+            data: { 'email': input },
+            async:false,
+            success: function (response) {
+              status = response['status'];
+              if (status == 1) {
+                $('#email_error span').text('Sorry! This email address has been taken by the other user');
+                $('#email_error').removeAttr('hidden');
+                $('#email').css('border-color', 'red');
+                validation = false;
+              } else {
+                $('#email_error').attr('hidden', 'hidden');
+                $('#email').css('border-color', '#ced4da');
+                validation = true;
+              }
+
+            }
+          });
+          console.log(validation)
+        }
+        return validation
+      }
+      function checkRegistrationUsername() {
+        var input = $('#register_username').val();
+        var validation = false;
+        if (input == '') {
+          $('#username_error span').text('Please enter valid username!');
+          $('#username_error').removeAttr('hidden');
+          $('#register_username').css('border-color', 'red');
+          console.log('username error')
+          validation = false
+        }
+        $.ajax({
+          url: '{{ url_for("main.check_username") }}',
+          method: 'POST',
+          dataType: 'json',//后台返回json格式的返回值
+          data: { 'username': input },
+          async:false,
+          success: function (response) {
+            status = response['status'];
+            if (status == 1) {
+              $('#username_error span').text('Sorry! This username has been taken by the other user');
+              $('#username_error').removeAttr('hidden');
+              $('#register_username').css('border-color', 'red');
+              console.log('username error')
+              validation = false
+            } else {
+              $('#username_error').attr('hidden', 'hidden');
+              $('#register_username').css('border-color', '#ced4da');
+              validation = true
+            }
+
+          }
+        });
+        return validation
+      }
+      function checkRegistrationPassword(){
+        var pwd = $('#register_password').val();
+        var pwd2 = $('#password2').val();
+        if (pwd!=pwd2){
+          $('#pwd_error span').text('Passwords do not match!');
+          $('#pwd_error').removeAttr('hidden');
+          $('#register_password').css('border-color', 'red');
+          $('#password2').css('border-color', 'red');
+          console.log('password not equal')
+          return false;
+
+        }else{
+          
+          $('#pwd_error').attr('hidden','hidden');
+          $('#register_password').css('border-color', '#ced4da');
+          $('#password2').css('border-color', '#ced4da');
+          return true;
+        }
+      }
+
+      $('#register').click(function () {
+        event.preventDefault();
+        var usernameCheck = checkRegistrationUsername();
+        var emailCheck = checkRegistrationEmail();
+        var passwordCheck = checkRegistrationPassword();
+        console.log(emailCheck)
+        console.log(passwordCheck)
+        if (usernameCheck && emailCheck && passwordCheck) {
+          console.log('register');
+          $('#register_form').submit();
+        } else {
+          console.log('not register');
+        }
+      });
+
+
+
+    });
+  </script>
+  {% endblock %}
+
+</body>
+
+</html>
